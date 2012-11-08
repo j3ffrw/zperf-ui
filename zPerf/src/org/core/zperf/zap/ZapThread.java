@@ -1,3 +1,24 @@
+/**
+ * - 11/2012: Class modified by Jeff Fermo
+ * 
+ * Changelog:
+ *      - modified and renamed class to handle zap's output
+ *      - remove JPerfWaitWindow since I'm using Netbeans Platform, 
+ *        it was no longer working as expected, still on my todo list
+ * 
+ * - 02/2008: Class created by Nicolas Richasse
+ * 
+ * Changelog:
+ * 	- class created
+ * 	- iperf line parsing fixed and improved
+ * 
+ * To do:
+ * 	- ...
+ *
+ * Old notes:
+ *	- The ParseLine results variable still ends up with a blank 0th string which may or may not ever matter (DC)
+ */
+
 package org.core.zperf.zap;
 
 import java.io.BufferedReader;
@@ -5,7 +26,6 @@ import java.io.InputStreamReader;
 import java.util.Date;
 import java.util.regex.Pattern;
 import javax.swing.SwingUtilities;
-import org.core.zperf.JPerfWaitWindow;
 import org.core.zperf.ZPerfUiTopComponent;
 import org.core.zperf.ZapUserSettings;
 import org.netbeans.api.progress.ProgressHandle;
@@ -78,7 +98,7 @@ public class ZapThread extends Thread{
     }
     
     private final Object waitWindowMutex = new Object();
-    private JPerfWaitWindow waitWindow;
+    //private JPerfWaitWindow waitWindow;
     
     public synchronized void quit()
 	{
@@ -91,13 +111,13 @@ public class ZapThread extends Thread{
 				{
 					synchronized(waitWindowMutex)
 					{
-						if (waitWindow != null)
-						{
-							return;
-						}
-						waitWindow = new JPerfWaitWindow(parentUi);
+						//if (waitWindow != null)
+						//{
+						//	return;
+						//}
+						//waitWindow = new JPerfWaitWindow(parentUi);
 						parentUi.setEnabled(false);
-						waitWindow.setVisible(true);
+						//waitWindow.setVisible(true);
                                                 
 					}
 					Thread t = new Thread()
@@ -180,9 +200,9 @@ public class ZapThread extends Thread{
 							
 							synchronized(waitWindowMutex)
 							{
-								waitWindow.setVisible(false);
-								waitWindow.dispose();
-								waitWindow = null;
+//								waitWindow.setVisible(false);
+//								waitWindow.dispose();
+//								waitWindow = null;
 								parentUi.setStoppedStatus();
 								parentUi.setEnabled(true);
                                                                 p.finish();
