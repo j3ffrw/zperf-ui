@@ -12,6 +12,8 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JSpinner;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import org.core.zperf.ui.charts.ZapCCDFChartForm;
 import org.core.zperf.zap.Measurement;
 import org.core.zperf.zap.MeasurementEvent;
@@ -22,6 +24,7 @@ import org.netbeans.api.settings.ConvertAsProperties;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.awt.StatusDisplayer;
+import org.openide.util.Exceptions;
 import org.openide.util.NbBundle.Messages;
 import org.openide.windows.IOProvider;
 import org.openide.windows.InputOutput;
@@ -51,6 +54,18 @@ preferredID = "zPerfUITopComponent")
 public final class ZPerfUiTopComponent extends TopComponent {
 
     public ZPerfUiTopComponent() {
+        
+        try {
+            UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+        } catch (ClassNotFoundException ex) {
+            Exceptions.printStackTrace(ex);
+        } catch (InstantiationException ex) {
+            Exceptions.printStackTrace(ex);
+        } catch (IllegalAccessException ex) {
+            Exceptions.printStackTrace(ex);
+        } catch (UnsupportedLookAndFeelException ex) {
+            Exceptions.printStackTrace(ex);
+        }
         
         // pattern by mkyong.com
         ipmask = new RegexFormatter(
