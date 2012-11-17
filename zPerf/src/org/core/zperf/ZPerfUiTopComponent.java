@@ -14,7 +14,6 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-import org.core.zperf.ui.charts.ZapCCDFChartForm;
 import org.core.zperf.zap.Measurement;
 import org.core.zperf.zap.MeasurementEvent;
 import org.core.zperf.zap.MeasurementListener;
@@ -110,7 +109,7 @@ public final class ZPerfUiTopComponent extends TopComponent {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
-        zPerfChartUi1 = new org.core.zperf.ui.charts.ZPerfChartUi("");
+        zPerfChartUi1 = new org.core.zperf.ui.charts.ZPerfMainChartUi("");
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         secondsSpn = new javax.swing.JSpinner();
@@ -295,6 +294,7 @@ public final class ZPerfUiTopComponent extends TopComponent {
         jPanel10.setLayout(new org.jdesktop.swingx.VerticalLayout());
 
         jXTaskPane1.setAnimated(false);
+        jXTaskPane1.setCollapsed(true);
         jXTaskPane1.setTitle(org.openide.util.NbBundle.getMessage(ZPerfUiTopComponent.class, "ZPerfUiTopComponent.jXTaskPane1.title")); // NOI18N
 
         jPanel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -530,6 +530,7 @@ public final class ZPerfUiTopComponent extends TopComponent {
         jPanel9.setLayout(new org.jdesktop.swingx.VerticalLayout());
 
         jXTaskPane3.setAnimated(false);
+        jXTaskPane3.setCollapsed(true);
         jXTaskPane3.setTitle(org.openide.util.NbBundle.getMessage(ZPerfUiTopComponent.class, "ZPerfUiTopComponent.jXTaskPane3.title")); // NOI18N
 
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(ZPerfUiTopComponent.class, "ZPerfUiTopComponent.jPanel6.border.title"))); // NOI18N
@@ -639,7 +640,7 @@ public final class ZPerfUiTopComponent extends TopComponent {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(zPerfChartUi1, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
+                .addComponent(zPerfChartUi1, javax.swing.GroupLayout.DEFAULT_SIZE, 583, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1085,7 +1086,7 @@ public final class ZPerfUiTopComponent extends TopComponent {
     private javax.swing.JTextArea tagTa;
     private javax.swing.JFormattedTextField tosBitsFtf;
     private javax.swing.JSpinner transmitRateSpn;
-    private org.core.zperf.ui.charts.ZPerfChartUi zPerfChartUi1;
+    private org.core.zperf.ui.charts.ZPerfMainChartUi zPerfChartUi1;
     // End of variables declaration//GEN-END:variables
     
     
@@ -1103,5 +1104,4 @@ public final class ZPerfUiTopComponent extends TopComponent {
     
     public static ZapParameters parameters;
     
-    private ZapCCDFChartForm zapCCDFChart;
 }
