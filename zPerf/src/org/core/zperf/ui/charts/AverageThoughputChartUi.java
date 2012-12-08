@@ -16,20 +16,33 @@ public class AverageThoughputChartUi extends javax.swing.JPanel {
      * Creates new form BarChartPanel
      */
     public AverageThoughputChartUi() {
-        initComponents();
-        
+        initComponents();        
         
     }
 
     public AverageThoughputChartUi(String title){
+        
+        initComponents();   
+        
+//        averageThroughputDataSet.addValue(10, "Average", "TEST1");
+//        averageThroughputDataSet.addValue(15, "Average", "TEST2");
+//        averageThroughputDataSet.addValue(30, "Average", "TEST3");
+        
         barChart.setDataset(averageThroughputDataSet);
+        
+//        barChart.se
     }
         
     public void addSpeed(double speed, String traceName){
         averageThroughputDataSet.addValue(speed, "Average", traceName);
         
-        //barChart.chartChanged(null);
+    }
+    
+    public void setTitle(double percentage){
         
+        barChart.setValueAxisLabel("Throuput(Mbps) @ " + percentage + "%");
+        
+                
     }
     
     public void clearChart(){
@@ -47,10 +60,12 @@ public class AverageThoughputChartUi extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
         barChart = new org.jfree.beans.JBarChart();
 
         barChart.setCategoryAxisLabel(org.openide.util.NbBundle.getMessage(AverageThoughputChartUi.class, "AverageThoughputChartUi.barChart.categoryAxisLabel")); // NOI18N
-        barChart.setLegendPosition(org.jfree.beans.LegendPosition.NONE);
+        barChart.setCategoryAxisLocation(org.jfree.chart.axis.AxisLocation.TOP_OR_LEFT);
+        barChart.setOrientation(org.jfree.chart.plot.PlotOrientation.HORIZONTAL);
         barChart.setSource(org.openide.util.NbBundle.getMessage(AverageThoughputChartUi.class, "AverageThoughputChartUi.barChart.source")); // NOI18N
         barChart.setSubtitle(org.openide.util.NbBundle.getMessage(AverageThoughputChartUi.class, "AverageThoughputChartUi.barChart.subtitle")); // NOI18N
         barChart.setTitle(org.openide.util.NbBundle.getMessage(AverageThoughputChartUi.class, "AverageThoughputChartUi.barChart.title")); // NOI18N
@@ -60,28 +75,33 @@ public class AverageThoughputChartUi extends javax.swing.JPanel {
         barChart.setLayout(barChartLayout);
         barChartLayout.setHorizontalGroup(
             barChartLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 398, Short.MAX_VALUE)
         );
         barChartLayout.setVerticalGroup(
             barChartLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGap(0, 298, Short.MAX_VALUE)
         );
+
+        jScrollPane1.setViewportView(barChart);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(barChart, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(barChart, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.jfree.beans.JBarChart barChart;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 
+    //private org.jfree.beans.JBarChart chart;
     DefaultCategoryDataset averageThroughputDataSet = new DefaultCategoryDataset();
 
 }

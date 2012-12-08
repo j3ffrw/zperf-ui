@@ -16,50 +16,59 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="barChart" alignment="0" pref="400" max="32767" attributes="0"/>
+          <Component id="jScrollPane1" alignment="1" pref="400" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="barChart" alignment="0" pref="300" max="32767" attributes="0"/>
+          <Component id="jScrollPane1" alignment="1" pref="300" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Container class="org.jfree.beans.JBarChart" name="barChart">
-      <Properties>
-        <Property name="categoryAxisLabel" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="org/core/zperf/ui/charts/Bundle.properties" key="AverageThoughputChartUi.barChart.categoryAxisLabel" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
-        </Property>
-        <Property name="legendPosition" type="org.jfree.beans.LegendPosition" editor="org.jfree.beans.editors.LegendPositionEditor">
-          <SerializedValue value="-84,-19,0,5,115,114,0,30,111,114,103,46,106,102,114,101,101,46,98,101,97,110,115,46,76,101,103,101,110,100,80,111,115,105,116,105,111,110,111,127,-7,-20,-78,7,-64,-86,2,0,1,76,0,4,110,97,109,101,116,0,18,76,106,97,118,97,47,108,97,110,103,47,83,116,114,105,110,103,59,120,112,116,0,19,76,101,103,101,110,100,80,111,115,105,116,105,111,110,46,78,79,78,69"/>
-        </Property>
-        <Property name="source" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="org/core/zperf/ui/charts/Bundle.properties" key="AverageThoughputChartUi.barChart.source" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
-        </Property>
-        <Property name="subtitle" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="org/core/zperf/ui/charts/Bundle.properties" key="AverageThoughputChartUi.barChart.subtitle" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
-        </Property>
-        <Property name="title" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="org/core/zperf/ui/charts/Bundle.properties" key="AverageThoughputChartUi.barChart.title" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
-        </Property>
-        <Property name="valueAxisLabel" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="org/core/zperf/ui/charts/Bundle.properties" key="AverageThoughputChartUi.barChart.valueAxisLabel" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
-        </Property>
-      </Properties>
+    <Container class="javax.swing.JScrollPane" name="jScrollPane1">
 
-      <Layout>
-        <DimensionLayout dim="0">
-          <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="400" max="32767" attributes="0"/>
-          </Group>
-        </DimensionLayout>
-        <DimensionLayout dim="1">
-          <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="300" max="32767" attributes="0"/>
-          </Group>
-        </DimensionLayout>
-      </Layout>
+      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+      <SubComponents>
+        <Container class="org.jfree.beans.JBarChart" name="barChart">
+          <Properties>
+            <Property name="categoryAxisLabel" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+              <ResourceString bundle="org/core/zperf/ui/charts/Bundle.properties" key="AverageThoughputChartUi.barChart.categoryAxisLabel" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+            </Property>
+            <Property name="categoryAxisLocation" type="org.jfree.chart.axis.AxisLocation" editor="org.jfree.beans.editors.AxisLocationEditor">
+              <SerializedValue value="-84,-19,0,5,115,114,0,33,111,114,103,46,106,102,114,101,101,46,99,104,97,114,116,46,97,120,105,115,46,65,120,105,115,76,111,99,97,116,105,111,110,-46,-122,8,-93,-56,-47,-14,110,2,0,1,76,0,4,110,97,109,101,116,0,18,76,106,97,118,97,47,108,97,110,103,47,83,116,114,105,110,103,59,120,112,116,0,24,65,120,105,115,76,111,99,97,116,105,111,110,46,84,79,80,95,79,82,95,76,69,70,84"/>
+            </Property>
+            <Property name="orientation" type="org.jfree.chart.plot.PlotOrientation" editor="org.jfree.beans.editors.PlotOrientationEditor">
+              <SerializedValue value="-84,-19,0,5,115,114,0,36,111,114,103,46,106,102,114,101,101,46,99,104,97,114,116,46,112,108,111,116,46,80,108,111,116,79,114,105,101,110,116,97,116,105,111,110,-35,47,13,80,118,53,37,10,2,0,1,76,0,4,110,97,109,101,116,0,18,76,106,97,118,97,47,108,97,110,103,47,83,116,114,105,110,103,59,120,112,116,0,26,80,108,111,116,79,114,105,101,110,116,97,116,105,111,110,46,72,79,82,73,90,79,78,84,65,76"/>
+            </Property>
+            <Property name="source" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+              <ResourceString bundle="org/core/zperf/ui/charts/Bundle.properties" key="AverageThoughputChartUi.barChart.source" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+            </Property>
+            <Property name="subtitle" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+              <ResourceString bundle="org/core/zperf/ui/charts/Bundle.properties" key="AverageThoughputChartUi.barChart.subtitle" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+            </Property>
+            <Property name="title" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+              <ResourceString bundle="org/core/zperf/ui/charts/Bundle.properties" key="AverageThoughputChartUi.barChart.title" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+            </Property>
+            <Property name="valueAxisLabel" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+              <ResourceString bundle="org/core/zperf/ui/charts/Bundle.properties" key="AverageThoughputChartUi.barChart.valueAxisLabel" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+            </Property>
+          </Properties>
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <EmptySpace min="0" pref="398" max="32767" attributes="0"/>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <EmptySpace min="0" pref="298" max="32767" attributes="0"/>
+              </Group>
+            </DimensionLayout>
+          </Layout>
+        </Container>
+      </SubComponents>
     </Container>
   </SubComponents>
 </Form>
