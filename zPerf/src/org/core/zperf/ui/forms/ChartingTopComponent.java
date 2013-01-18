@@ -7,20 +7,26 @@ package org.core.zperf.ui.forms;
 import info.monitorenter.gui.chart.ITrace2D;
 import info.monitorenter.gui.chart.ITracePoint2D;
 import info.monitorenter.gui.chart.traces.Trace2DLtd;
+import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 import javax.imageio.ImageIO;
+import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JSpinner;
+import javax.swing.JSpinner.DefaultEditor;
+import javax.swing.JTextArea;
 import javax.swing.SpinnerListModel;
 import javax.swing.SpinnerModel;
 import javax.swing.UIManager;
@@ -28,7 +34,9 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.table.DefaultTableModel;
 import org.core.zperf.CustomFileFilter;
 import org.core.zperf.ZPerfUiTopComponent;
-import org.core.zperf.ZapCCDFParser;
+import org.core.zperf.ZapFileParser;
+import org.core.zperf.ZapResult;
+import org.core.zperf.ZapResultTrace;
 import org.core.zperf.ZapUserSettings;
 import org.netbeans.api.settings.ConvertAsProperties;
 import org.openide.awt.ActionID;
@@ -47,9 +55,9 @@ autostore = false)
     preferredID = "chartingTopComponent",
 //iconBase="SET/PATH/TO/ICON/HERE", 
 persistenceType = TopComponent.PERSISTENCE_ALWAYS)
-@TopComponent.Registration(mode = "editor", openAtStartup = false)
+@TopComponent.Registration(mode = "editor", openAtStartup = true)
 @ActionID(category = "Window", id = "org.core.zperf.ui.forms.chartingTopComponent")
-@ActionReference(path = "Menu/Window" /*, position = 333 */)
+@ActionReference(path = "Menu/Window" , position = 333 )
 @TopComponent.OpenActionRegistration(
     displayName = "#CTL_chartingAction",
 preferredID = "chartingTopComponent")
@@ -96,9 +104,9 @@ public final class ChartingTopComponent extends TopComponent {
         
         traceTable.setModel(traceTableModel);
         
-        List list = new ArrayList();
+        List<Double> list = new ArrayList<Double>();
         
-        for (double d : ZapCCDFParser.percentage) {
+        for (double d : ZapFileParser.percentage) {
             
             list.add(d);
             
@@ -120,12 +128,14 @@ public final class ChartingTopComponent extends TopComponent {
         jPopupMenu1 = new javax.swing.JPopupMenu();
         isolateSelectedTraceChkBx = new javax.swing.JCheckBoxMenuItem();
         deleteSelectedTraceMenuItem = new javax.swing.JMenuItem();
+        viewZapResultDetail = new javax.swing.JMenuItem();
         jPanel1 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         addTraceBtn = new javax.swing.JButton();
         clearBtn = new javax.swing.JButton();
         percentageSpinner = new javax.swing.JSpinner();
         jLabel1 = new javax.swing.JLabel();
+        takeSnapshotBtn = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         traceTable = new javax.swing.JTable();
@@ -151,6 +161,14 @@ public final class ChartingTopComponent extends TopComponent {
             }
         });
         jPopupMenu1.add(deleteSelectedTraceMenuItem);
+
+        org.openide.awt.Mnemonics.setLocalizedText(viewZapResultDetail, org.openide.util.NbBundle.getMessage(ChartingTopComponent.class, "ChartingTopComponent.viewZapResultDetail.text")); // NOI18N
+        viewZapResultDetail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewZapResultDetailActionPerformed(evt);
+            }
+        });
+        jPopupMenu1.add(viewZapResultDetail);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -178,6 +196,13 @@ public final class ChartingTopComponent extends TopComponent {
 
         org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(ChartingTopComponent.class, "ChartingTopComponent.jLabel1.text")); // NOI18N
 
+        org.openide.awt.Mnemonics.setLocalizedText(takeSnapshotBtn, org.openide.util.NbBundle.getMessage(ChartingTopComponent.class, "ChartingTopComponent.takeSnapshotBtn.text")); // NOI18N
+        takeSnapshotBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                takeSnapshotBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -187,11 +212,11 @@ public final class ChartingTopComponent extends TopComponent {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(percentageSpinner, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(clearBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE)
-                                .addComponent(addTraceBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(jLabel1))
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(clearBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE)
+                            .addComponent(addTraceBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel1)
+                            .addComponent(takeSnapshotBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -202,7 +227,9 @@ public final class ChartingTopComponent extends TopComponent {
                 .addComponent(addTraceBtn)
                 .addGap(10, 10, 10)
                 .addComponent(clearBtn)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(takeSnapshotBtn)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(percentageSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -336,7 +363,9 @@ public final class ChartingTopComponent extends TopComponent {
             
             if (selectedRow >= 0) {
                 
-                ITrace2D selectedTrace = (ITrace2D) traceTableModel.getValueAt(selectedRow, 0);
+                ITrace2D selectedTrace = 
+                        ((ZapResultTrace) traceTableModel.getValueAt(selectedRow, 0))
+                        .getZapCCDFTrace();
                 
                 zapCCDFChartPanel1.highlightTrace(selectedTrace);
             }
@@ -350,7 +379,8 @@ public final class ChartingTopComponent extends TopComponent {
 
         if (selectedRow >= 0) {
             
-            ITrace2D trace = (ITrace2D) traceTableModel.getValueAt(selectedRow, 0);
+            ITrace2D trace = ((ZapResultTrace) traceTableModel.getValueAt(selectedRow, 0))
+                        .getZapCCDFTrace();
         
             traceTableModel.removeRow(selectedRow);
 
@@ -364,16 +394,17 @@ public final class ChartingTopComponent extends TopComponent {
     }
     
     private void takeSnapshot(){
-        JFileChooser zapfileChooser = new JFileChooser(System.getProperty("user.home"));
-        zapfileChooser.setDialogTitle("Select zPerf working directory");
+        
+        CustomFileChooser zapfileChooser = new CustomFileChooser(new String[] {"png","jpg","bmp","gif"},
+                false);
+        zapfileChooser.setDialogTitle("Enter filename of image to save");
         zapfileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-        zapfileChooser.setAcceptAllFileFilterUsed(false);
-        zapfileChooser.setFileFilter(new CustomFileFilter(new String[]{"bmp", "gif", "jpeg", "jpg", "png"}, "image files"));
-        zapfileChooser.setCurrentDirectory(new File(zapUserSettings.getWorkingFolder()));
+        zapfileChooser.setCurrentDirectory(new File(zapUserSettings.getWorkingFolder()));        
+        
+        if (zapfileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
 
-        if (zapfileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-
-            createSnapShot(zapfileChooser.getSelectedFile());
+            File file = zapfileChooser.getSelectedFile();
+            createSnapShot(file);
 
         }else {
             // do nothing I guess
@@ -382,50 +413,48 @@ public final class ChartingTopComponent extends TopComponent {
     
     private void addTraceBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addTraceBtnActionPerformed
 
-        final String zapFile = getZapFile();
+        final File[] zapFile = getZapFile();
 
         if (zapFile == null) {
             return;
         }
 
-        ZapCCDFParser zapCCDFParser = new ZapCCDFParser(zapFile);
+        for (File file : zapFile) {
+            ZapFileParser zapCCDFParser = new ZapFileParser(file.toString());
 
-        addTracesFromZapFile(zapCCDFParser, zapFile);
-       
-        rebuiltBarChart();
+            addTracesFromZapFile(zapCCDFParser, file.toString());
+
+            rebuiltBarChart();
+        }
+        
+        
     }//GEN-LAST:event_addTraceBtnActionPerformed
 
-    private void addTracesFromZapFile(ZapCCDFParser zapCCDFParser, String traceName){
-    
-        List<double[]> throughputList = zapCCDFParser.getThroughput();
+    private void addTracesFromZapFile(ZapFileParser zapCCDFParser, String traceName){
         
-        List<String> traceTag = zapCCDFParser.getTraceTag();
-        
-        int traceNumber = 0;
-        
-        for (double[] throughput : throughputList) {
+        for (ZapResult zapResult : zapCCDFParser.getZapResults()) {
             
-            ITrace2D zapCCDFTrace = new Trace2DLtd(110);        
+            ITrace2D zapCCDFTrace = new Trace2DLtd(110); 
             
-            zapCCDFTrace.setName(new File(traceName).getName() + " - "+ traceTag.get(traceNumber) + "-#" + traceNumber++);
-
+            zapCCDFTrace.setName(zapResult.toString());
+            
             zapCCDFChartPanel1.addNewCCDFTrace(zapCCDFTrace);
             
-            double[] percentage = ZapCCDFParser.percentage;
-
-            for (int cntr = 0; cntr < throughput.length; cntr++) {
-
-                double currentThroughput = throughput[cntr];
-
-                zapCCDFTrace.addPoint(percentage[cntr], currentThroughput);            
+            int percentageCntr = 0;
+            
+            for (Double throughput : zapResult.getThroughput()) {
+                zapCCDFTrace.addPoint(ZapFileParser.percentage[percentageCntr++], throughput);
             }
+            
+            ZapResultTrace zapResultTrace = new ZapResultTrace(zapResult, zapCCDFTrace);
+            
+            Vector<ZapResultTrace> newTrace = new Vector<ZapResultTrace>();
 
-            Vector<ITrace2D> newTrace = new Vector<ITrace2D>();
-
-            newTrace.add(zapCCDFTrace);
+            newTrace.add(zapResultTrace);
             
             traceTableModel.addRow(newTrace);
         }
+        
         
     }
         
@@ -439,7 +468,8 @@ public final class ChartingTopComponent extends TopComponent {
             
             for (int selectedItem : selectedRows) {
             
-                ITrace2D iTrace2D = (ITrace2D) traceTableModel.getValueAt(selectedItem, 0);
+                ITrace2D iTrace2D = ((ZapResultTrace) traceTableModel.getValueAt(selectedItem, 0))
+                        .getZapCCDFTrace();
                 
                 iTrace2D.setVisible(true);
             }
@@ -449,7 +479,8 @@ public final class ChartingTopComponent extends TopComponent {
             double percentage = (Double) percentageSpinner.getValue();
             
             for (int selectedItem : selectedRows) {
-                ITrace2D trace = (ITrace2D) traceTableModel.getValueAt(selectedItem, 0);
+                ITrace2D trace = ((ZapResultTrace) traceTableModel.getValueAt(selectedItem, 0))
+                        .getZapCCDFTrace();
              
                 for (Iterator<ITracePoint2D> it = trace.iterator(); it.hasNext();) {
                 
@@ -529,30 +560,50 @@ public final class ChartingTopComponent extends TopComponent {
         rebuiltBarChart();
     }//GEN-LAST:event_percentageSpinnerStateChanged
 
+    private void takeSnapshotBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_takeSnapshotBtnActionPerformed
+        takeSnapshot();
+    }//GEN-LAST:event_takeSnapshotBtnActionPerformed
+
+    private void viewZapResultDetailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewZapResultDetailActionPerformed
+        int selectedRow = traceTable.getSelectedRow();
+
+        selectedRow = traceTable.convertRowIndexToModel(selectedRow);
+
+        if (selectedRow >= 0) {
+            
+            ZapResultTrace zapResultTrace = ((ZapResultTrace) traceTableModel.getValueAt(selectedRow, 0));
+                        
+            ZapResult zapResult = zapResultTrace.getZapResult();
+            
+            JTextArea textArea = new JTextArea(zapResult.getDetail());
+            
+            JOptionPane.showMessageDialog(this, textArea, "Zap result detail", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_viewZapResultDetailActionPerformed
+
     private void rebuiltBarChart(){
-        
-        //double percentage = ZapCCDFParser.percentage[percentageSlider.getValue()];
         
         double percentage = (Double) percentageSpinner.getValue();
         
-        averageThoughputChartUi1.clearChart();
-        
-        for (Object e : traceTableModel.getDataVector()) {
+
+        for (Object e : 
+                traceTableModel.getDataVector()) {
             
-            ITrace2D trace = ((Vector<ITrace2D>) e).elementAt(0);
-            
+            @SuppressWarnings("unchecked")
+            ITrace2D trace = ((Vector<ZapResultTrace>) e).get(0).getZapCCDFTrace();
+                  
             for (Iterator<ITracePoint2D> it = trace.iterator(); it.hasNext();) {
                 
                 ITracePoint2D iTracePoint2D = it.next();
                 
-                double x = iTracePoint2D.getX();
+                double xAxis = iTracePoint2D.getX();
                 
-                if (Double.compare(x, percentage) == 0) {
+                if (Double.compare(xAxis, percentage) == 0) {
                     
-                    double y = iTracePoint2D.getY();
+                    double yAxis = iTracePoint2D.getY();
                     
-                    averageThoughputChartUi1.addSpeed(y, trace.getName());
-                            
+                    averageThoughputChartUi1.addSpeed(yAxis, trace.getName());
+                    
                     break;
                 }
             }
@@ -566,11 +617,26 @@ public final class ChartingTopComponent extends TopComponent {
     
     public void createSnapShot(File filename){
         
-        BufferedImage snapshot = zapCCDFChartPanel1.getSnapShot(1300, 600);
+        JSpinner width = new JSpinner(new javax.swing.SpinnerNumberModel(1300, 0, 1920, 1));
+        JSpinner height = new JSpinner(new javax.swing.SpinnerNumberModel(800, 0, 1920, 1));
+        
+        JPanel panel = new JPanel();
+        panel.setPreferredSize(new Dimension(250,25));
+        panel.add(new JLabel("X:"));
+        panel.add(width);
+        panel.add(new JLabel("Y:"));
+        panel.add(height);
+        
+        JOptionPane.showMessageDialog(this, panel, "Enter dimension", JOptionPane.QUESTION_MESSAGE);
+                
+        BufferedImage snapshot = zapCCDFChartPanel1.getSnapShot(getSelectedValue(width), getSelectedValue(height));
         
          int dot = filename.getName().lastIndexOf(".");
      
         String ext = filename.getName().substring(dot + 1);
+        
+        System.out.println("" + filename);
+        
         try {
             ImageIO.write(snapshot, ext, filename);
         } catch (IOException ex) {
@@ -578,17 +644,34 @@ public final class ChartingTopComponent extends TopComponent {
         }
     }
     
-    private String getZapFile(){
+    private int getSelectedValue(JSpinner spinner){
+        try {
+            spinner.commitEdit();            
+        }
+        catch (ParseException pe) {
+            JComponent editor = spinner.getEditor();
+            if (editor instanceof DefaultEditor) {
+                ((DefaultEditor)editor).getTextField().setValue(spinner.getValue());
+            }
+            // reset the value to some known value:
+            spinner.setValue(1300);            
+       }
+        
+       return Integer.parseInt(spinner.getValue().toString());
+    }
+    
+    private File[] getZapFile(){
         JFileChooser zapfileChooser = new JFileChooser(System.getProperty("user.home"));
         zapfileChooser.setDialogTitle("Select zPerf working directory");
         zapfileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
         zapfileChooser.setAcceptAllFileFilterUsed(false);
+        zapfileChooser.setMultiSelectionEnabled(true);
         zapfileChooser.setFileFilter(new CustomFileFilter(new String[]{"zap"}, "zap file"));
         zapfileChooser.setCurrentDirectory(new File(zapUserSettings.getWorkingFolder()));
         
         if (zapfileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) { 
                                 
-            return zapfileChooser.getSelectedFile().toString();            
+            return zapfileChooser.getSelectedFiles();            
             
         }else {
             // do nothing I guess
@@ -636,7 +719,9 @@ public final class ChartingTopComponent extends TopComponent {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JSpinner percentageSpinner;
+    private javax.swing.JButton takeSnapshotBtn;
     private javax.swing.JTable traceTable;
+    private javax.swing.JMenuItem viewZapResultDetail;
     private org.core.zperf.ui.charts.ZapCCDFChartPanel zapCCDFChartPanel1;
     // End of variables declaration//GEN-END:variables
     

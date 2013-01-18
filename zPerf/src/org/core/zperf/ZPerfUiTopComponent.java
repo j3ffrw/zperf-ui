@@ -927,6 +927,8 @@ public final class ZPerfUiTopComponent extends TopComponent {
         
         String message = ((JTextArea)evt.getSource()).getText().trim();
         
+        message = message.replaceAll(",", "_");
+        
         if (!message.isEmpty()) {
             
             parameters.setTag(message);
@@ -939,6 +941,8 @@ public final class ZPerfUiTopComponent extends TopComponent {
         
         String message = ((JTextArea)evt.getSource()).getText().trim();
         
+        message = message.replaceAll(",", "_");
+        
         if (!message.isEmpty()) {
         
             parameters.setSubTag(message);
@@ -950,6 +954,8 @@ public final class ZPerfUiTopComponent extends TopComponent {
     private void noteTaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_noteTaFocusLost
         
         String message = ((JTextArea)evt.getSource()).getText().trim();
+        
+        message = message.replaceAll(",", "_");
         
         if (!message.isEmpty()) {
             

@@ -7,7 +7,6 @@
                 <attr name="instanceCreate" methodvalue="org.openide.windows.TopComponent.openAction"/>
                 <attr name="preferredID" stringvalue="chartingTopComponent"/>
             </file>
-            <file name="org-core-zperf-ui-forms-chartingTopComponent.instance_hidden"/>
         </folder>
     </folder>
     <folder name="Menu">
@@ -72,10 +71,6 @@
                 <attr name="originalFile" stringvalue="Actions/System/org-openide-actions-SaveAction.instance"/>
                 <attr name="position" intvalue="1500"/>
             </file>
-            <file name="org-openide-actions-SaveAsAction.shadow_hidden">
-                <attr name="originalFile" stringvalue="Actions/System/org-openide-actions-SaveAsAction.instance"/>
-                <attr name="position" intvalue="1600"/>
-            </file>
             <file name="org-openide-actions-SaveAllAction.shadow_hidden">
                 <attr name="originalFile" stringvalue="Actions/System/org-openide-actions-SaveAllAction.instance"/>
                 <attr name="position" intvalue="1700"/>
@@ -91,7 +86,7 @@
             </file>
         </folder>
         <folder name="GoTo_hidden">
-            <attr name="SystemFileSystem.localizingBundle" stringvalue="org.netbeans.core.ui.resources.Bundle"/>
+            <attr name="displayName" bundlevalue="org.netbeans.core.ui.resources.Bundle#Menu/GoTo_hidden"/>
             <attr name="position" intvalue="400"/>
             <file name="SeparatorBeforeGoToLine.instance">
                 <attr name="instanceClass" stringvalue="javax.swing.JSeparator"/>
@@ -114,12 +109,7 @@
                 <attr name="position" intvalue="1800"/>
             </file>
         </folder>
-        <folder name="View">
-            <file name="org-netbeans-core-actions-HTMLViewAction.shadow_hidden">
-                <attr name="originalFile" stringvalue="Actions/View/org-netbeans-core-actions-HTMLViewAction.instance"/>
-                <attr name="position" intvalue="400"/>
-            </file>
-        </folder>
+        <folder name="View"/>
     </folder>
     <folder name="Toolbars">
         <attr name="SystemFileSystem.icon" urlvalue="nbresloc:/org/netbeans/core/resources/toolbarsOption.gif"/>
